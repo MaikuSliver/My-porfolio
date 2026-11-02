@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -15,6 +10,7 @@ import { ContactModal } from './components/ContactModal';
 import { Footer } from './components/Footer';
 import { Accomplishment } from './data/portfolioData';
 import { Mail, Sparkles } from 'lucide-react';
+import { playClickSound } from './utils/soundEffects';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Accomplishment | null>(null);
@@ -28,23 +24,23 @@ export default function App() {
       />
 
       <main>
-        {/* Personal Introduction & Core Information with big borderless portrait */}
+        {/* Personal Introduction & Interactive Network Canvas */}
         <Hero
           onOpenContactModal={() => setIsContactModalOpen(true)}
         />
 
-        {/* Practical IT Skills & What Mike Does */}
+        {/* Practical IT Skills with Live Filter & Search */}
         <SkillsSection />
 
         {/* Work Experience & Employment History */}
         <TimelineSection />
 
-        {/* Key Accomplishments & Research Wins */}
+        {/* Key Accomplishments with 3D Tilt & Multi-Media Carousels */}
         <ProjectsSection
           onSelectProject={(project) => setSelectedProject(project)}
         />
 
-        {/* Certifications, Licenses & Education */}
+        {/* Certifications, Licenses & Education with 3D Tilt */}
         <CertificationsSection />
 
         {/* Minimalist Editorial Contact Banner */}
@@ -62,7 +58,10 @@ export default function App() {
             </p>
             <div className="mt-8 flex justify-center">
               <button
-                onClick={() => setIsContactModalOpen(true)}
+                onClick={() => {
+                  playClickSound();
+                  setIsContactModalOpen(true);
+                }}
                 className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold text-white bg-pink-600 rounded-xl hover:bg-pink-500 active:scale-95 transition-all shadow-lg shadow-pink-600/25 cursor-pointer"
               >
                 <Mail className="w-4 h-4" />

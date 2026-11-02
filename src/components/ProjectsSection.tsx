@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Award, ChevronLeft, ChevronRight, Camera, Images } from 'lucide-react';
+import { ArrowUpRight, Award, ChevronLeft, ChevronRight, Camera, Images, Video, Play } from 'lucide-react';
 import { PORTFOLIO_DATA, Accomplishment } from '../data/portfolioData';
+import { Card3DTilt } from './Card3DTilt';
+import { playClickSound, playSlideSound } from '../utils/soundEffects';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: Accomplishment) => void;
@@ -18,41 +20,77 @@ const ProjectCard: React.FC<{
 
   const currentImage = hasGallery ? gallery[activeSlide].url : item.image;
   const currentTitle = hasGallery ? gallery[activeSlide].title : item.title;
+  const isCurrentVideo = Boolean((hasGallery && (gallery[activeSlide]?.isVideo || currentImage.endsWith('.mp4'))) || currentImage.endsWith('.mp4'));
+
+  // Automatically slide every 5 seconds across all images and videos
+  React.useEffect(() => {
+    if (!hasGallery) return;
+
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % gallery.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [hasGallery, gallery.length]);
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
+    playSlideSound();
     setActiveSlide((prev) => (prev - 1 + gallery.length) % gallery.length);
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
+    playSlideSound();
     setActiveSlide((prev) => (prev + 1) % gallery.length);
   };
 
+  const handleCardClick = () => {
+    playClickSound();
+    onSelect();
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: idx * 0.08 }}
-      onClick={onSelect}
-      className="group cursor-pointer rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/60 hover:bg-white dark:hover:bg-neutral-900/90 transition-all duration-300 hover:border-pink-500/40 shadow-sm hover:shadow-md overflow-hidden flex flex-col justify-between"
+    <Card3DTilt
+      maxTilt={5}
+      spotlightColor="rgba(236, 72, 153, 0.12)"
+      className="h-full rounded-2xl"
+      onClick={handleCardClick}
     >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: idx * 0.08 }}
+        className="group cursor-pointer rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/60 hover:bg-white dark:hover:bg-neutral-900/90 transition-all duration-300 hover:border-pink-500/40 shadow-sm hover:shadow-md overflow-hidden flex flex-col justify-between h-full"
+      >
       <div>
         {/* Media Container with Carousel Support */}
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-950 select-none">
           <AnimatePresence mode="wait">
-            <motion.img
-              key={currentImage}
-              src={currentImage}
-              alt={currentTitle}
-              referrerPolicy="no-referrer"
-              initial={{ opacity: 0.3 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0.3 }}
-              transition={{ duration: 0.25 }}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            {isCurrentVideo ? (
+              <motion.video
+                key={currentImage}
+                src={currentImage}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <motion.img
+                key={currentImage}
+                src={currentImage}
+                alt={currentTitle}
+                referrerPolicy="no-referrer"
+                initial={{ opacity: 0.3 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0.3 }}
+                transition={{ duration: 0.25 }}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
           </AnimatePresence>
 
           {/* Gradients */}
@@ -67,7 +105,11 @@ const ProjectCard: React.FC<{
             <div className="flex items-center gap-1.5 pointer-events-auto">
               {hasGallery && (
                 <div className="flex items-center gap-1 text-[11px] font-semibold text-white bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/20 shadow-sm">
-                  <Camera className="w-3 h-3 text-pink-400" />
+                  {isCurrentVideo ? (
+                    <Video className="w-3 h-3 text-pink-400" />
+                  ) : (
+                    <Camera className="w-3 h-3 text-pink-400" />
+                  )}
                   <span>{activeSlide + 1} / {gallery.length}</span>
                 </div>
               )}
@@ -99,9 +141,22 @@ const ProjectCard: React.FC<{
 
               {/* Bottom Photo Title and Indicator Dots */}
               <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-col gap-1.5 pointer-events-none">
-                <p className="text-xs font-semibold text-white line-clamp-1 drop-shadow-md">
-                  {gallery[activeSlide].title}
-                </p>
+                <div className="bg-neutral-950/85 backdrop-blur-md px-3 py-2 rounded-xl border border-white/15 shadow-lg">
+                  <div className="flex items-center justify-between gap-2 mb-0.5">
+                    <span className="text-[10px] font-bold text-pink-400 uppercase tracking-wider">
+                      {gallery[activeSlide].subhead || `Photo ${activeSlide + 1}`}
+                    </span>
+                    <span className="text-[9px] font-mono text-white/70">
+                      {activeSlide + 1} / {gallery.length}
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-white line-clamp-1 drop-shadow-sm">
+                    {gallery[activeSlide].title}
+                  </p>
+                  <p className="text-[11px] text-neutral-300 line-clamp-1 leading-tight mt-0.5">
+                    {gallery[activeSlide].caption}
+                  </p>
+                </div>
 
                 <div className="flex items-center gap-1 overflow-hidden pointer-events-auto">
                   {gallery.slice(0, 16).map((_, dotIdx) => (
@@ -133,7 +188,11 @@ const ProjectCard: React.FC<{
             {hasGallery && (
               <span className="flex items-center gap-1 text-[11px] font-medium text-pink-600 dark:text-pink-400">
                 <Images className="w-3 h-3" />
-                <span>{gallery.length} Real Photos</span>
+                <span>
+                  {gallery.some((g) => g.isVideo || g.url.endsWith('.mp4'))
+                    ? `${gallery.length} Photos & Video`
+                    : `${gallery.length} Real Photos`}
+                </span>
               </span>
             )}
           </div>
@@ -174,6 +233,7 @@ const ProjectCard: React.FC<{
         </span>
       </div>
     </motion.div>
+  </Card3DTilt>
   );
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Award, ShieldCheck, CheckCircle2, FileCheck, ExternalLink } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { Card3DTilt } from './Card3DTilt';
 
 export const CertificationsSection: React.FC = () => {
   const { certifications, education } = PORTFOLIO_DATA;
@@ -25,57 +26,63 @@ export const CertificationsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Certifications Grid */}
+        {/* Certifications Grid with 3D Tilt */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {certifications.map((cert, idx) => (
-            <motion.div
+            <Card3DTilt
               key={cert.id}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 hover:bg-white dark:hover:bg-neutral-900/70 transition-all shadow-sm"
+              maxTilt={6}
+              spotlightColor="rgba(236, 72, 153, 0.1)"
+              className="h-full rounded-2xl"
             >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="text-[11px] font-mono font-semibold text-pink-700 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-900/40 px-2.5 py-1 rounded">
-                    {cert.badgeType}
-                  </span>
-                  <span className="text-xs font-mono text-neutral-500">
-                    {cert.date}
-                  </span>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-pink-500/30 hover:bg-white dark:hover:bg-neutral-900/70 transition-all shadow-sm h-full"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className="text-[11px] font-mono font-semibold text-pink-700 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-900/40 px-2.5 py-1 rounded">
+                      {cert.badgeType}
+                    </span>
+                    <span className="text-xs font-mono text-neutral-500">
+                      {cert.date}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white leading-snug">
+                    {cert.title}
+                  </h3>
+                  <div className="text-xs font-medium text-pink-600 dark:text-pink-300 mt-1">
+                    {cert.issuer}
+                  </div>
+
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-3 leading-relaxed">
+                    {cert.description}
+                  </p>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white leading-snug">
-                  {cert.title}
-                </h3>
-                <div className="text-xs font-medium text-pink-600 dark:text-pink-300 mt-1">
-                  {cert.issuer}
+                <div className="mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-800/80 flex items-center justify-between text-xs">
+                  {cert.score ? (
+                    <span className="font-mono font-bold text-neutral-900 dark:text-white tabular-nums">
+                      {cert.score}
+                    </span>
+                  ) : (
+                    <span className="text-neutral-500 font-mono text-[11px]">
+                      Verified
+                    </span>
+                  )}
+
+                  {cert.credentialId && (
+                    <span className="text-[11px] font-mono text-neutral-500 truncate max-w-[150px]">
+                      {cert.credentialId}
+                    </span>
+                  )}
                 </div>
-
-                <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-3 leading-relaxed">
-                  {cert.description}
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-800/80 flex items-center justify-between text-xs">
-                {cert.score ? (
-                  <span className="font-mono font-bold text-neutral-900 dark:text-white tabular-nums">
-                    {cert.score}
-                  </span>
-                ) : (
-                  <span className="text-neutral-500 font-mono text-[11px]">
-                    Verified
-                  </span>
-                )}
-
-                {cert.credentialId && (
-                  <span className="text-[11px] font-mono text-neutral-500 truncate max-w-[150px]">
-                    {cert.credentialId}
-                  </span>
-                )}
-              </div>
-            </motion.div>
+              </motion.div>
+            </Card3DTilt>
           ))}
         </div>
 

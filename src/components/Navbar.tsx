@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Mail } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { playClickSound } from '../utils/soundEffects';
 
 interface NavbarProps {
   onOpenContactModal: () => void;
@@ -24,6 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal }) => {
         {/* Zone 1: Brand title */}
         <a
           href="#"
+          onClick={playClickSound}
           className="text-xl sm:text-2xl font-extrabold tracking-tight text-neutral-900 dark:text-white whitespace-nowrap shrink-0 transition-colors"
         >
           Mike Angel<span className="text-pink-600 dark:text-pink-400">.</span>
@@ -35,6 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal }) => {
             <a
               key={link.label}
               href={link.href}
+              onClick={playClickSound}
               className="hover:text-neutral-950 dark:hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
             >
               {link.label}
@@ -47,7 +50,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal }) => {
           <ThemeToggle />
 
           <button
-            onClick={onOpenContactModal}
+            onClick={() => {
+              playClickSound();
+              onOpenContactModal();
+            }}
             className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-pink-600 rounded-lg hover:bg-pink-500 transition-colors shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
           >
             <Mail className="w-3.5 h-3.5" />

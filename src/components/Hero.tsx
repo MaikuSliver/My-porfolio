@@ -2,26 +2,32 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, MapPin, Facebook, Github, Phone, ArrowDown } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { NetworkCanvas } from './NetworkCanvas';
+import { InteractiveStats } from './InteractiveStats';
+import { playClickSound } from '../utils/soundEffects';
 
 interface HeroProps {
   onOpenContactModal: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
-  const { profile, heroStats } = PORTFOLIO_DATA;
+  const { profile } = PORTFOLIO_DATA;
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <section id="about" className="relative pt-8 pb-14 md:pt-14 md:pb-20 lg:pt-16 lg:pb-20 border-b border-neutral-200/80 dark:border-neutral-800/60 overflow-hidden transition-colors duration-200">
+      {/* Interactive Constellation & Node Routing Network Canvas */}
+      <NetworkCanvas />
+
       {/* Subtle atmospheric ambient glow behind the photo */}
       <div className="absolute top-1/3 right-0 lg:right-12 -z-10 h-[560px] w-[560px] rounded-full bg-gradient-to-tr from-pink-500/15 via-rose-500/10 to-transparent blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-5 -z-10 h-72 w-72 rounded-full bg-pink-500/5 dark:bg-pink-900/10 blur-3xl pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-6 z-10 pointer-events-none">
         {/* Main 2-Column Split: Minimalist Typography on Left, Prominent Borderless Portrait on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center pointer-events-auto">
           
-          {/* Left Column: Minimalist, clean copy (inspired by Joe Greyson portfolio style) */}
+          {/* Left Column: Minimalist, clean copy */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -51,7 +57,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
             {/* Primary Action Buttons & Socials */}
             <div className="mt-7 flex flex-wrap items-center gap-3.5">
               <button
-                onClick={onOpenContactModal}
+                onClick={() => {
+                  playClickSound();
+                  onOpenContactModal();
+                }}
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-pink-600 rounded-xl hover:bg-pink-500 active:scale-95 transition-all shadow-md shadow-pink-600/25 cursor-pointer"
               >
                 <Mail className="w-4 h-4" />
@@ -60,6 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
 
               <a
                 href="#accomplishments"
+                onClick={playClickSound}
                 className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-neutral-800 dark:text-neutral-200 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all cursor-pointer shadow-sm"
               >
                 <span>View Accomplishments</span>
@@ -72,6 +82,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
                   href={profile.facebook || "https://www.facebook.com/ElyBoombilya"}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={playClickSound}
                   className="p-3 text-neutral-600 dark:text-neutral-300 hover:text-pink-600 dark:hover:text-pink-400 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-pink-500/40 transition-colors shadow-sm"
                   aria-label="Facebook Profile"
                   title="Facebook Profile"
@@ -82,6 +93,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
                   href={profile.github || "https://github.com/MaikuSliver"}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={playClickSound}
                   className="p-3 text-neutral-600 dark:text-neutral-300 hover:text-pink-600 dark:hover:text-pink-400 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-pink-500/40 transition-colors shadow-sm"
                   aria-label="GitHub Profile"
                   title="GitHub Profile"
@@ -100,6 +112,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
               <span aria-hidden="true" className="text-neutral-300 dark:text-neutral-700">·</span>
               <a
                 href={`tel:${profile.phone || '09610222593'}`}
+                onClick={playClickSound}
                 className="flex items-center gap-1 font-mono text-neutral-700 dark:text-neutral-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
                 title="Direct Phone"
               >
@@ -107,9 +120,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
                 <span>{profile.phoneFormatted || '0961 022 2593'}</span>
               </a>
               <span aria-hidden="true" className="text-neutral-300 dark:text-neutral-700">·</span>
-              <span className="text-neutral-700 dark:text-neutral-300">
-                {profile.email}
-              </span>
+              <a
+                href={`mailto:${profile.email}`}
+                onClick={playClickSound}
+                className="flex items-center gap-1.5 text-neutral-700 dark:text-neutral-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+                title="Send Email"
+              >
+                <Mail className="w-3.5 h-3.5 text-pink-600 dark:text-pink-400" />
+                <span>{profile.email}</span>
+              </a>
             </div>
           </motion.div>
 
@@ -132,7 +151,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
 
             {/* Profile Picture Container */}
             <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] flex justify-center lg:justify-end items-end">
-
               {/* Enhanced Image with Crisp Contour Outline Border & Highlight Glow */}
               <img
                 src={profile.avatar}
@@ -161,27 +179,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
 
         </div>
 
-        {/* Quantified Accomplishments Strip */}
-        <div className="mt-14 pt-8 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 border-t border-neutral-200 dark:border-neutral-800/80">
-          {heroStats.map((stat, idx) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.15 + idx * 0.06 }}
-              className="flex flex-col p-4 rounded-xl bg-white/70 dark:bg-neutral-900/50 border border-neutral-200/70 dark:border-neutral-800/70 shadow-sm"
-            >
-              <div className="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-white tracking-tight font-mono tabular-nums">
-                {stat.value}
-              </div>
-              <div className="text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200 mt-1">
-                {stat.label}
-              </div>
-              <div className="text-[11px] text-pink-600 dark:text-pink-400 mt-0.5 font-medium">
-                {stat.unit}
-              </div>
-            </motion.div>
-          ))}
+        {/* Quantified Accomplishments Strip with Interactive Animated Counters */}
+        <div className="pointer-events-auto">
+          <InteractiveStats />
         </div>
       </div>
     </section>
