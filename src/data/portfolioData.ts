@@ -81,82 +81,82 @@ export const PORTFOLIO_DATA = {
       tags: ['POS Systems', 'Network Setup', 'Preventive Maintenance', 'Asset Management', 'Store Support'],
       image: '/assets/aistudio/20251003_105626_9008ce2a.jpg',
       gallery: [
-        {
+        {//1
           url: '/assets/aistudio/20251003_105626_9008ce2a.jpg',
           title: 'Server Rack & Switch Enclosure Commissioning',
           caption: 'Mike inside the central network rack during patch panel cabling, switch mounting, and network testing for the mall launch.',
         },
-        {
+        {//2
           url: '/assets/aistudio/20251003_105554_586eecd3.jpg',
           title: 'Structured Ethernet Cabling & Switch Patching',
           caption: 'Terminating and dressing high-speed CAT6 patch cables directly into the 48-port core Gigabit switches.',
         },
-        {
-          url: '/assets/aistudio/20251020_154025_7218ea23.jpg',
+        {//3 
+          url: '/assets/aistudio/20251003_105517_728e2783.jpg',
           title: 'Core Switch & Structured Patch Panel Dressing',
           caption: 'Clean, color-coded rack cable routing and management ensuring 100% store network uptime and rapid fault tracing.',
         },
-        {
-          url: '/assets/aistudio/20260628_145840_4fd86e2d.jpg',
+        {//4
+          url: '/assets/aistudio/20251017_151747_890894f5.jpg',
           title: 'Fiber Optic Backbone Distribution',
           caption: 'Fiber optic distribution terminal termination linking store wings and perimeter zones directly to the main IT hub.',
         },
-        {
-          url: '/assets/aistudio/20251129_124336_a4a8edb1.jpg',
+        {//5 
+          url: '/assets/aistudio/20251020_154025_7218ea23.jpg',
           title: 'EDP Operations Center & POS Staging Bench',
           caption: 'Configuring POS receipt printers, barcode scanners, cash drawers, and cashier terminal software in the EDP department.',
         },
-        {
+        {//6
           url: '/assets/aistudio/20251111_173456_b2b59e8e.jpg',
           title: 'Fleet Deployment of POS & Office PCs',
           caption: 'Batch staging of Dell OptiPlex desktop workstations imaged with store OS, security policies, and retail software.',
         },
-        {
-          url: '/assets/aistudio/20251017_151747_890894f5.jpg',
+        {//7
+          url: '/assets/aistudio/20260628_145840_4fd86e2d.jpg',
           title: 'Component Diagnostics & Hardware Maintenance',
           caption: 'Hands-on motherboard diagnostics, RAM upgrades, and power supply servicing on mall desktop computers.',
         },
-        {
-          url: '/assets/aistudio/20251003_105517_728e2783.jpg',
+        {//8
+          url: '/assets/aistudio/20260524_123919_8f22e815.jpg',
           title: 'Retail Peripherals & Printer Roll Mechanism Service',
           caption: 'Detailed mechanical assembly and testing of specialized cashier roll feeds and thermal/dot-matrix receipt printers.',
         },
-        {
+        {//9
           url: '/assets/aistudio/20260126_112458_a150a509.jpg',
           title: 'Preventive Maintenance & Thermal Servicing',
           caption: 'Scheduled hardware cleaning, thermal management, and dust removal routines to maximize hardware lifespan in retail environments.',
         },
-        {
-          url: '/assets/aistudio/20260524_123919_8f22e815.jpg',
+        {//10
+          url: '/assets/aistudio/20251129_124336_a4a8edb1.jpg',
           title: 'Mall Security & CCTV Display Array Inspection',
           caption: 'Routine inspection and display calibration across mall security monitoring consoles and DVR/NVR surveillance streams.',
         },
-        {
+        {//11
           url: '/assets/aistudio/20250930_090602_a1c9661b.jpg',
           title: 'Data Center & Active Network Inspection',
           caption: 'Monitoring active network equipment, uninterruptible power supplies (UPS), and router status during operational checks.',
         },
-        {
+        {//12
           url: '/assets/aistudio/received_920150120982611_d4b8d785.jpeg',
           title: 'EDP Technical Dispatch & Support Desk',
           caption: 'Monitoring live terminal transactions, handling internal helpdesk requests, and resolving cashier issues promptly.',
         },
-        {
+        {//13
           url: '/assets/aistudio/received_1801558334471914_4ed017cf.jpeg',
           title: 'Gaisano Grand Grand Opening Celebration',
           caption: 'Mike and retail store colleagues at the CREDIT department during the landmark grand opening of Gaisano Grand Mall of Carmen.',
         },
-        {
+        {//14
           url: '/assets/aistudio/Messenger_creation_5173A1DA-CB30-4350-A9AB-8788314243C0_232e48e0.jpeg',
           title: 'EDP Engineering Crew in the Server Room',
           caption: 'The complete technical and operations team gathered inside the communications and server room during pre-launch sign-off.',
         },
-        {
+        {//15
           url: '/assets/aistudio/Messenger_creation_16A9C39F-72C3-43BD-93D3-7B505E3570AA_1a92927b.jpeg',
           title: 'Store IT Support Specialists',
           caption: 'EDP team members ready on-site to handle cashier checkout lane escalations and maintain customer checkout flow.',
         },
-        {
+        {//16
           url: '/assets/aistudio/20260405_132728_d610fa03.jpg',
           title: 'Mall Audio-Visual & Multimedia Systems Support',
           caption: 'Setting up high-lumen projection systems, PA audio feeds, and presentation hardware for mall events and marketing activations.',
