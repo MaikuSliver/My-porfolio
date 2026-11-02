@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mike Angel Manipon Portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/aistudio/image_bd385662.png" />
+    <link rel="shortcut icon" type="image/png" href="/assets/aistudio/image_bd385662.png" />
+    <link rel="apple-touch-icon" href="/assets/aistudio/image_bd385662.png" />
+    <meta name="description" content="Portfolio of Mike Angel A. Manipon, IT Professional, CSC Professional Eligible, and EDP Infotech specialist." />
+    <meta property="og:title" content="Mike Angel Manipon Portfolio" />
+    <meta property="og:description" content="Personal portfolio of Mike Angel A. Manipon showcasing enterprise POS operations, network administration, CSC eligibility, and computer vision research." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('portfolio-theme');
+          var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          if (stored === 'light' || (!stored && prefersLight)) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 antialiased selection:bg-pink-600 selection:text-white transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
