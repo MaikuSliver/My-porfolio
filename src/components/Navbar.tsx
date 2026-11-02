@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal }) => {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-200/80 dark:border-neutral-800/80 bg-white/85 dark:bg-neutral-950/85 backdrop-blur-md transition-colors duration-200">
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-200/80 dark:border-neutral-800/80 bg-white/85 dark:bg-neutral-950/85 backdrop-blur-md transition-colors duration-200">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-3.5">
         {/* Zone 1: Brand title */}
         <a

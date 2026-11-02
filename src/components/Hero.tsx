@@ -12,7 +12,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <section id="about" className="relative pt-6 pb-14 md:pt-12 md:pb-20 border-b border-neutral-200/80 dark:border-neutral-800/60 overflow-hidden transition-colors duration-200">
+    <section id="about" className="relative pt-8 pb-14 md:pt-14 md:pb-20 lg:pt-16 lg:pb-20 border-b border-neutral-200/80 dark:border-neutral-800/60 overflow-hidden transition-colors duration-200">
       {/* Subtle atmospheric ambient glow behind the photo */}
       <div className="absolute top-1/3 right-0 lg:right-12 -z-10 h-[560px] w-[560px] rounded-full bg-gradient-to-tr from-pink-500/15 via-rose-500/10 to-transparent blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-5 -z-10 h-72 w-72 rounded-full bg-pink-500/5 dark:bg-pink-900/10 blur-3xl pointer-events-none" />
@@ -113,28 +113,48 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContactModal }) => {
             </div>
           </motion.div>
 
-          {/* Right Column: Big, Borderless Profile Picture as the dominant visual highlight (based on reference photo) */}
+          {/* Right Column: Prominent Profile Picture with Crisp Contour Outline, Highlights & IT Design Details */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 xl:col-span-7 flex justify-center lg:justify-end items-end order-1 lg:order-2 relative"
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6 xl:col-span-6 flex justify-center lg:justify-end items-end order-1 lg:order-2 relative"
           >
-            {/* Soft subtle glow under/behind the cutout */}
+            {/* Tech Design Detail: Subtle Circuit / Orbit Ring Backdrop */}
             <div className="absolute inset-0 -z-10 flex items-center justify-center lg:justify-end pointer-events-none">
-              <div className="w-[420px] sm:w-[540px] lg:w-[680px] xl:w-[780px] h-[420px] sm:h-[540px] lg:h-[680px] xl:h-[780px] rounded-full bg-gradient-to-t from-pink-500/25 via-pink-400/15 to-transparent blur-3xl" />
+              {/* Soft ambient back glow */}
+              <div className="w-[340px] sm:w-[420px] lg:w-[480px] xl:w-[520px] h-[340px] sm:h-[420px] lg:h-[480px] xl:h-[520px] rounded-full bg-gradient-to-t from-pink-500/25 via-pink-400/15 to-transparent blur-3xl" />
+              
+              {/* Modern Tech Orbit Ring with dashed styling */}
+              <div className="absolute w-[280px] sm:w-[360px] lg:w-[420px] h-[280px] sm:h-[360px] lg:h-[420px] rounded-full border border-pink-500/25 dark:border-pink-500/35 border-dashed animate-[spin_80s_linear_infinite]" />
+              <div className="absolute w-[320px] sm:w-[400px] lg:w-[460px] h-[320px] sm:h-[400px] lg:h-[460px] rounded-full border border-neutral-300/40 dark:border-neutral-700/40" />
             </div>
 
-            {/* Profile Picture: Noticeably bigger, completely borderless, transparent background */}
-            <div className="relative w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[660px] xl:max-w-[760px] flex justify-center lg:justify-end items-end">
+            {/* Profile Picture Container */}
+            <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] flex justify-center lg:justify-end items-end">
+
+              {/* Enhanced Image with Crisp Contour Outline Border & Highlight Glow */}
               <img
                 src={profile.avatar}
                 alt={profile.fullName}
                 referrerPolicy="no-referrer"
                 onLoad={() => setImageLoaded(true)}
-                className={`w-full h-auto max-h-[560px] sm:max-h-[660px] lg:max-h-[780px] xl:max-h-[860px] object-contain object-bottom select-none transition-all duration-500 scale-105 sm:scale-110 lg:scale-120 origin-bottom ${
+                style={{
+                  filter: [
+                    'drop-shadow(1.5px 0 0 rgba(255, 255, 255, 0.95))',
+                    'drop-shadow(-1.5px 0 0 rgba(255, 255, 255, 0.95))',
+                    'drop-shadow(0 1.5px 0 rgba(255, 255, 255, 0.95))',
+                    'drop-shadow(0 -1.5px 0 rgba(255, 255, 255, 0.95))',
+                    'drop-shadow(0 0 16px rgba(236, 72, 153, 0.35))',
+                    'drop-shadow(0 18px 28px rgba(0, 0, 0, 0.18))',
+                    'contrast(1.06)',
+                    'brightness(1.02)',
+                    'saturate(1.08)'
+                  ].join(' ')
+                }}
+                className={`w-full h-auto max-h-[440px] sm:max-h-[500px] lg:max-h-[540px] xl:max-h-[580px] object-contain object-bottom select-none transition-all duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-80'
-                } filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_25px_45px_rgba(236,72,153,0.18)]`}
+                }`}
               />
             </div>
           </motion.div>

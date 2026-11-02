@@ -1,11 +1,181 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { ArrowUpRight, Award } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowUpRight, Award, ChevronLeft, ChevronRight, Camera, Images } from 'lucide-react';
 import { PORTFOLIO_DATA, Accomplishment } from '../data/portfolioData';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: Accomplishment) => void;
 }
+
+const ProjectCard: React.FC<{
+  item: Accomplishment;
+  idx: number;
+  onSelect: () => void;
+}> = ({ item, idx, onSelect }) => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const gallery = item.gallery || [];
+  const hasGallery = gallery.length > 1;
+
+  const currentImage = hasGallery ? gallery[activeSlide].url : item.image;
+  const currentTitle = hasGallery ? gallery[activeSlide].title : item.title;
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveSlide((prev) => (prev - 1 + gallery.length) % gallery.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveSlide((prev) => (prev + 1) % gallery.length);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: idx * 0.08 }}
+      onClick={onSelect}
+      className="group cursor-pointer rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/60 hover:bg-white dark:hover:bg-neutral-900/90 transition-all duration-300 hover:border-pink-500/40 shadow-sm hover:shadow-md overflow-hidden flex flex-col justify-between"
+    >
+      <div>
+        {/* Media Container with Carousel Support */}
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-950 select-none">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImage}
+              src={currentImage}
+              alt={currentTitle}
+              referrerPolicy="no-referrer"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0.3 }}
+              transition={{ duration: 0.25 }}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </AnimatePresence>
+
+          {/* Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
+
+          {/* Top Bar Badges */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10 pointer-events-none">
+            <div className="text-[11px] font-medium text-pink-700 dark:text-pink-300 bg-white/95 dark:bg-neutral-950/85 backdrop-blur-md px-2.5 py-1 rounded-lg border border-neutral-200/80 dark:border-neutral-800/80 shadow-sm pointer-events-auto">
+              {item.category}
+            </div>
+
+            <div className="flex items-center gap-1.5 pointer-events-auto">
+              {hasGallery && (
+                <div className="flex items-center gap-1 text-[11px] font-semibold text-white bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/20 shadow-sm">
+                  <Camera className="w-3 h-3 text-pink-400" />
+                  <span>{activeSlide + 1} / {gallery.length}</span>
+                </div>
+              )}
+              <div className="rounded-full bg-white/95 dark:bg-neutral-950/85 p-1.5 text-neutral-700 dark:text-neutral-300 group-hover:text-pink-600 dark:group-hover:text-pink-400 group-hover:bg-neutral-100 dark:group-hover:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800/80 transition-colors shadow-sm">
+                <ArrowUpRight className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+
+          {/* Slide Navigation Controls */}
+          {hasGallery && (
+            <>
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Previous slide photo"
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/65 hover:bg-black/90 text-white/90 hover:text-white p-2 backdrop-blur-md border border-white/25 shadow-lg transition-transform hover:scale-110 active:scale-95"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Next slide photo"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/65 hover:bg-black/90 text-white/90 hover:text-white p-2 backdrop-blur-md border border-white/25 shadow-lg transition-transform hover:scale-110 active:scale-95"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+
+              {/* Bottom Photo Title and Indicator Dots */}
+              <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-col gap-1.5 pointer-events-none">
+                <p className="text-xs font-semibold text-white line-clamp-1 drop-shadow-md">
+                  {gallery[activeSlide].title}
+                </p>
+
+                <div className="flex items-center gap-1 overflow-hidden pointer-events-auto">
+                  {gallery.slice(0, 16).map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveSlide(dotIdx);
+                      }}
+                      className={`h-1.5 rounded-full transition-all duration-200 cursor-pointer ${
+                        dotIdx === activeSlide
+                          ? 'w-5 bg-pink-500'
+                          : 'w-1.5 bg-white/50 hover:bg-white/80'
+                      }`}
+                      aria-label={`Jump to slide ${dotIdx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Card Content */}
+        <div className="p-6">
+          <div className="flex items-center justify-between text-xs text-neutral-500 mb-1">
+            <span>{item.institution}</span>
+            {hasGallery && (
+              <span className="flex items-center gap-1 text-[11px] font-medium text-pink-600 dark:text-pink-400">
+                <Images className="w-3 h-3" />
+                <span>{gallery.length} Real Photos</span>
+              </span>
+            )}
+          </div>
+          <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-300 transition-colors">
+            {item.title}
+          </h3>
+          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-2">
+            {item.tagline}
+          </p>
+
+          {/* Key Metrics */}
+          <div className="mt-4 grid grid-cols-2 gap-3 border-t border-neutral-200 dark:border-neutral-800/80 pt-4">
+            {item.metrics.slice(0, 2).map((metric) => (
+              <div key={metric.label}>
+                <span className="text-[11px] text-neutral-500 block">{metric.label}</span>
+                <span className="text-sm font-bold text-neutral-900 dark:text-neutral-200">
+                  {metric.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Card Footer */}
+      <div className="px-6 pb-6 pt-2 border-t border-neutral-200 dark:border-neutral-800/40 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+        <div className="flex flex-wrap items-center gap-1.5 truncate">
+          {item.tags.slice(0, 3).map((tag, tagIdx) => (
+            <React.Fragment key={tag}>
+              {tagIdx > 0 && <span aria-hidden="true" className="text-neutral-400 dark:text-neutral-600">·</span>}
+              <span className="text-neutral-600 dark:text-neutral-400 font-medium">{tag}</span>
+            </React.Fragment>
+          ))}
+        </div>
+
+        <span className="text-pink-600 dark:text-pink-400 font-semibold group-hover:underline whitespace-nowrap ml-3">
+          {hasGallery ? 'View Gallery & Details →' : 'Read More →'}
+        </span>
+      </div>
+    </motion.div>
+  );
+};
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onSelectProject }) => {
   const { accomplishments } = PORTFOLIO_DATA;
@@ -62,78 +232,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onSelectProjec
         {/* Accomplishment Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredItems.map((item, idx) => (
-            <motion.div
+            <ProjectCard
               key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              onClick={() => onSelectProject(item)}
-              className="group cursor-pointer rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/60 hover:bg-white dark:hover:bg-neutral-900/90 transition-all duration-300 hover:border-pink-500/40 shadow-sm hover:shadow-md overflow-hidden flex flex-col justify-between"
-            >
-              <div>
-                {/* Media Container */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-950">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                    <div className="text-[11px] font-medium text-pink-700 dark:text-pink-300 bg-white/90 dark:bg-neutral-950/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 shadow-sm">
-                      {item.category}
-                    </div>
-                    <div className="rounded-full bg-white/90 dark:bg-neutral-950/80 p-1.5 text-neutral-700 dark:text-neutral-300 group-hover:text-pink-600 dark:group-hover:text-pink-400 group-hover:bg-neutral-100 dark:group-hover:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 transition-colors shadow-sm">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Content */}
-                <div className="p-6">
-                  <div className="text-xs text-neutral-500 mb-1">
-                    {item.institution}
-                  </div>
-                  <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-300 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-2">
-                    {item.tagline}
-                  </p>
-
-                  {/* Key Metrics */}
-                  <div className="mt-4 grid grid-cols-2 gap-3 border-t border-neutral-200 dark:border-neutral-800/80 pt-4">
-                    {item.metrics.slice(0, 2).map((metric) => (
-                      <div key={metric.label}>
-                        <span className="text-[11px] text-neutral-500 block">{metric.label}</span>
-                        <span className="text-sm font-bold text-neutral-900 dark:text-neutral-200">
-                          {metric.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer */}
-              <div className="px-6 pb-6 pt-2 border-t border-neutral-200 dark:border-neutral-800/40 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                <div className="flex flex-wrap items-center gap-1.5 truncate">
-                  {item.tags.slice(0, 3).map((tag, tagIdx) => (
-                    <React.Fragment key={tag}>
-                      {tagIdx > 0 && <span aria-hidden="true" className="text-neutral-400 dark:text-neutral-600">·</span>}
-                      <span className="text-neutral-600 dark:text-neutral-400 font-medium">{tag}</span>
-                    </React.Fragment>
-                  ))}
-                </div>
-
-                <span className="text-pink-600 dark:text-pink-400 font-semibold group-hover:underline whitespace-nowrap ml-3">
-                  Read More &rarr;
-                </span>
-              </div>
-            </motion.div>
+              item={item}
+              idx={idx}
+              onSelect={() => onSelectProject(item)}
+            />
           ))}
         </div>
       </div>

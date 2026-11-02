@@ -1,6 +1,6 @@
 # Mike Angel Manipon - Portfolio
 
-Personal portfolio website for **Mike Angel A. Manipon**, IT Professional, Civil Service Commission (CSC) Professional Eligible, and EDP Infotech specialist.
+Personal portfolio website for **Mike Angel A. Manipon**, IT Professional, Civil Service Commission (CSC) Professional Eligible, and IT Specialist.
 
 Built with **React 19**, **Vite**, **TypeScript**, and **Tailwind CSS**.
 

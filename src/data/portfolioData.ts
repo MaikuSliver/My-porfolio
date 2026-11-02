@@ -1,3 +1,9 @@
+export interface GalleryImage {
+  url: string;
+  title: string;
+  caption: string;
+}
+
 export interface Accomplishment {
   id: string;
   title: string;
@@ -5,6 +11,7 @@ export interface Accomplishment {
   category: 'Retail & Store IT' | 'Software & AI' | 'Government & Licensing' | 'Infrastructure & Support';
   tags: string[];
   image: string;
+  gallery?: GalleryImage[];
   metrics: { label: string; value: string }[];
   overview: string;
   highlights: string[];
@@ -41,7 +48,7 @@ export const PORTFOLIO_DATA = {
     fullName: 'Mike Angel Avenion Manipon',
     displayName: 'Mike Angel',
     title: 'IT Specialist & Systems Engineer',
-    role: 'EDP - Infotech Specialist',
+    role: 'IT Specialist',
     bio: 'Dedicated Information Technology specialist with proven experience setting up store systems, computer networks, and practical software solutions. Pioneered the IT and Point-of-Sale (POS) rollout for Gaisano Grand Mall of Carmen, holds a Civil Service Professional License (83.41%), and has built award-winning AI research for agriculture.',
     simplePitch: 'I keep everyday business technology running smoothly — from setting up checkout cashier terminals and office networks to troubleshooting hardware and building helpful software.',
     location: 'Carmen, Davao del Norte, Philippines',
@@ -52,8 +59,8 @@ export const PORTFOLIO_DATA = {
     yearsExperience: 'Industry Experienced',
     education: 'BS in Information Technology (BSIT) · Davao del Norte State College',
     eligibility: 'Civil Service Professional Eligible · 83.41% Rating',
-    currentRole: 'EDP - Infotech at Gaisano Grand Mall of Carmen',
-    avatar: '/assets/aistudio/525500364_24059568413715604_2594039153441200203_n-removebg-preview_56e7c74d.png',
+    currentRole: 'IT Specialist at Gaisano Grand Mall of Carmen',
+    avatar: '/assets/aistudio/mike_enhanced_profile.png',
     facebook: 'https://www.facebook.com/ElyBoombilya',
     github: 'https://github.com/MaikuSliver',
   },
@@ -72,7 +79,89 @@ export const PORTFOLIO_DATA = {
       tagline: 'Set up 100% of cashier terminals, computers, and store networks for Gaisano Grand Mall of Carmen',
       category: 'Retail & Store IT' as const,
       tags: ['POS Systems', 'Network Setup', 'Preventive Maintenance', 'Asset Management', 'Store Support'],
-      image: '/images/pos_cashier_deployment.jpg',
+      image: '/assets/aistudio/20251003_105626_9008ce2a.jpg',
+      gallery: [
+        {
+          url: '/assets/aistudio/20251003_105626_9008ce2a.jpg',
+          title: 'Server Rack & Switch Enclosure Commissioning',
+          caption: 'Mike inside the central network rack during patch panel cabling, switch mounting, and network testing for the mall launch.',
+        },
+        {
+          url: '/assets/aistudio/20251003_105554_586eecd3.jpg',
+          title: 'Structured Ethernet Cabling & Switch Patching',
+          caption: 'Terminating and dressing high-speed CAT6 patch cables directly into the 48-port core Gigabit switches.',
+        },
+        {
+          url: '/assets/aistudio/20251020_154025_7218ea23.jpg',
+          title: 'Core Switch & Structured Patch Panel Dressing',
+          caption: 'Clean, color-coded rack cable routing and management ensuring 100% store network uptime and rapid fault tracing.',
+        },
+        {
+          url: '/assets/aistudio/20260628_145840_4fd86e2d.jpg',
+          title: 'Fiber Optic Backbone Distribution',
+          caption: 'Fiber optic distribution terminal termination linking store wings and perimeter zones directly to the main IT hub.',
+        },
+        {
+          url: '/assets/aistudio/20251129_124336_a4a8edb1.jpg',
+          title: 'EDP Operations Center & POS Staging Bench',
+          caption: 'Configuring POS receipt printers, barcode scanners, cash drawers, and cashier terminal software in the EDP department.',
+        },
+        {
+          url: '/assets/aistudio/20251111_173456_b2b59e8e.jpg',
+          title: 'Fleet Deployment of POS & Office PCs',
+          caption: 'Batch staging of Dell OptiPlex desktop workstations imaged with store OS, security policies, and retail software.',
+        },
+        {
+          url: '/assets/aistudio/20251017_151747_890894f5.jpg',
+          title: 'Component Diagnostics & Hardware Maintenance',
+          caption: 'Hands-on motherboard diagnostics, RAM upgrades, and power supply servicing on mall desktop computers.',
+        },
+        {
+          url: '/assets/aistudio/20251003_105517_728e2783.jpg',
+          title: 'Retail Peripherals & Printer Roll Mechanism Service',
+          caption: 'Detailed mechanical assembly and testing of specialized cashier roll feeds and thermal/dot-matrix receipt printers.',
+        },
+        {
+          url: '/assets/aistudio/20260126_112458_a150a509.jpg',
+          title: 'Preventive Maintenance & Thermal Servicing',
+          caption: 'Scheduled hardware cleaning, thermal management, and dust removal routines to maximize hardware lifespan in retail environments.',
+        },
+        {
+          url: '/assets/aistudio/20260524_123919_8f22e815.jpg',
+          title: 'Mall Security & CCTV Display Array Inspection',
+          caption: 'Routine inspection and display calibration across mall security monitoring consoles and DVR/NVR surveillance streams.',
+        },
+        {
+          url: '/assets/aistudio/20250930_090602_a1c9661b.jpg',
+          title: 'Data Center & Active Network Inspection',
+          caption: 'Monitoring active network equipment, uninterruptible power supplies (UPS), and router status during operational checks.',
+        },
+        {
+          url: '/assets/aistudio/received_920150120982611_d4b8d785.jpeg',
+          title: 'EDP Technical Dispatch & Support Desk',
+          caption: 'Monitoring live terminal transactions, handling internal helpdesk requests, and resolving cashier issues promptly.',
+        },
+        {
+          url: '/assets/aistudio/received_1801558334471914_4ed017cf.jpeg',
+          title: 'Gaisano Grand Grand Opening Celebration',
+          caption: 'Mike and retail store colleagues at the CREDIT department during the landmark grand opening of Gaisano Grand Mall of Carmen.',
+        },
+        {
+          url: '/assets/aistudio/Messenger_creation_5173A1DA-CB30-4350-A9AB-8788314243C0_232e48e0.jpeg',
+          title: 'EDP Engineering Crew in the Server Room',
+          caption: 'The complete technical and operations team gathered inside the communications and server room during pre-launch sign-off.',
+        },
+        {
+          url: '/assets/aistudio/Messenger_creation_16A9C39F-72C3-43BD-93D3-7B505E3570AA_1a92927b.jpeg',
+          title: 'Store IT Support Specialists',
+          caption: 'EDP team members ready on-site to handle cashier checkout lane escalations and maintain customer checkout flow.',
+        },
+        {
+          url: '/assets/aistudio/20260405_132728_d610fa03.jpg',
+          title: 'Mall Audio-Visual & Multimedia Systems Support',
+          caption: 'Setting up high-lumen projection systems, PA audio feeds, and presentation hardware for mall events and marketing activations.',
+        },
+      ],
       metrics: [
         { label: 'Coverage', value: '100% Cashiers & Offices' },
         { label: 'Role', value: 'Pioneering IT Setup' },
@@ -117,7 +206,24 @@ export const PORTFOLIO_DATA = {
       tagline: 'Earned official career service eligibility with an exceptional 83.41% passing score',
       category: 'Government & Licensing' as const,
       tags: ['CSC Professional', 'National License', 'Civil Service', 'Government Qualified'],
-      image: '/images/csc_professional_seal.jpg',
+      image: '/assets/aistudio/Copy_of_CSEPROF_9c0bdc9f.jpg',
+      gallery: [
+        {
+          url: '/assets/aistudio/Copy_of_CSEPROF_9c0bdc9f.jpg',
+          title: 'Official Certification of Eligibility (CSE-PROF)',
+          caption: 'Original Certificate of Eligibility (Cert No. R11-20250904-010) awarded to Mike Angel A. Manipon with an 83.41% rating by the Civil Service Commission Regional Office XI.',
+        },
+        {
+          url: '/assets/aistudio/20250904_112703_8a68128e.jpg',
+          title: 'Official In-Person Certificate Claiming',
+          caption: 'Mike presenting his official Certificate of Eligibility at the Civil Service Commission Davao Region Regional Office XI.',
+        },
+        {
+          url: '/assets/aistudio/20250904_105407_027c32a9.jpg',
+          title: 'CSC Examination Services Division',
+          caption: 'Official verification and issuance processing counters (Photocapture & Releasing) at the Civil Service Commission Davao City office.',
+        },
+      ],
       metrics: [
         { label: 'Passing Score', value: '83.41%' },
         { label: 'Certifying Body', value: 'Civil Service Commission' },
@@ -259,7 +365,7 @@ export const PORTFOLIO_DATA = {
   experience: [
     {
       period: 'August 2025 — Present',
-      role: 'EDP - Infotech Specialist',
+      role: 'IT Specialist',
       company: 'Gaisano Grand Group of Companies (Southland Commercial Complex, Inc.)',
       location: 'Carmen, Davao del Norte',
       supervisor: 'Leonilo R. Cruspero',
